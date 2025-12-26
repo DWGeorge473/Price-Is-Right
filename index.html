@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Baby Shower Price Is Right</title>
+  <style>
+    :root{
+      --bg1:#fff7fb;
+      --bg2:#f2fbff;
+      --ink:#1f2937;
+      --muted:#6b7280;
+      --border: rgba(17,24,39,.12);
+      --shadow: 0 16px 40px rgba(17,24,39,.10);
+      --radius: 18px;
+      --pink:#ff6fae;
+      --lav:#a78bfa;
+      --mint:#34d399;
+      --sky:#60a5fa;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--ink);
+      background:
+        radial-gradient(1100px 700px at 15% 0%, rgba(255,111,174,.25), transparent 55%),
+        radial-gradient(900px 650px at 85% 10%, rgba(167,139,250,.22), transparent 55%),
+        radial-gradient(1000px 700px at 30% 95%, rgba(52,211,153,.16), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg2));
+      min-height:100vh;
+      display:flex;
+      justify-content:center;
+      padding: 18px;
+    }
+    a{color:inherit}
+
+    .wrap{width:min(1100px, 100%);} 
+
+    header{
+      display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
+      gap:12px; margin: 6px 0 14px;
+    }
+
+    .brand{display:flex; align-items:center; gap:12px;}
+
+    .logo{
+      width:46px; height:46px; border-radius:16px;
+      background: linear-gradient(135deg, rgba(255,111,174,1), rgba(167,139,250,.95));
+      box-shadow: 0 14px 30px rgba(255,111,174,.20);
+      display:grid; place-items:center;
+      border: 1px solid rgba(255,255,255,.75);
+      overflow:hidden;
+    }
+    .logo svg{width:30px; height:30px}
+
+    h1{font-size:18px; margin:0; letter-spacing:.2px;}
+    .sub{color:var(--muted); font-size:13px; margin-top:2px}
+
+    .top-actions{display:flex; gap:10px; align-items:center; flex-wrap:wrap;}
+
+    .pill{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.75);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+      box-shadow: 0 8px 20px rgba(17,24,39,.06);
+    }
+
+    .btn{
+      cursor:pointer;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.85);
+      color: var(--ink);
+      padding: 11px 12px;
+      border-radius: 14px;
+      font-weight: 800;
+      transition: transform .06s ease, background .2s ease, border .2s ease;
+      user-select:none;
+      box-shadow: 0 10px 24px rgba(17,24,39,.06);
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(255,111,174,1), rgba(167,139,250,.92));
+      border-color: rgba(255,111,174,.35);
+      color:#fff;
+    }
+    .btn.good{background: rgba(52,211,153,.16); border-color: rgba(52,211,153,.35)}
+    .btn:disabled{opacity:.55; cursor:not-allowed}
+
+    .card{
+      background: rgba(255,255,255,.85);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .grid{display:grid; grid-template-columns: 1.12fr .88fr;}
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr} }
+
+    .pane{padding:16px;}
+
+    @media (max-width: 520px){
+      body{padding: 12px}
+      .pane{padding:14px}
+      .btn{width:100%}
+      .top-actions .btn{width:auto}
+    }
+
+    .hero{display:flex; flex-direction:column; gap:14px;}
+
+    .imgbox{
+      border-radius: 18px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,242,247,.9), rgba(242,251,255,.9));
+      aspect-ratio: 16 / 10;
+      display:grid;
+      place-items:center;
+      position:relative;
+    }
+    .imgbox::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(260px 140px at 20% 20%, rgba(255,111,174,.14), transparent 60%),
+        radial-gradient(260px 160px at 80% 30%, rgba(167,139,250,.14), transparent 60%),
+        radial-gradient(300px 180px at 50% 90%, rgba(52,211,153,.10), transparent 65%);
+      pointer-events:none;
+    }
+    .imgbox img{width:100%; height:100%; object-fit:contain; position:relative; z-index:1;}
+
+    .item-title{font-size:18px; margin:0; line-height:1.25}
+    .meta{display:flex; flex-wrap:wrap; gap:8px; margin-top:6px}
+    .tag{
+      font-size:12px; color: var(--ink);
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.85);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .desc{color:var(--muted); font-size:13px; line-height:1.45; margin:0}
+
+    .controls{display:flex; flex-direction:column; gap:12px;}
+
+    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px;}
+
+    input[type="text"], input[type="number"], input[type="password"], select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.92);
+      color: var(--ink);
+      outline:none;
+    }
+
+    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+
+    .progress{height: 10px; border-radius: 999px; background: rgba(31,41,55,.08); overflow:hidden; border: 1px solid var(--border);}
+    .bar{height:100%; width:0%; background: linear-gradient(90deg, rgba(255,111,174,1), rgba(167,139,250,1), rgba(96,165,250,1));}
+
+    .statline{display:flex; justify-content:space-between; gap:10px; color:var(--muted); font-size:12px}
+
+    .hint{
+      font-size:12px; color: var(--muted);
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px dashed rgba(255,111,174,.35);
+      background: rgba(255,242,247,.75);
+    }
+
+    .result{
+      border-radius: 16px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.92);
+      display:none;
+      gap:10px;
+      box-shadow: 0 10px 24px rgba(17,24,39,.06);
+    }
+    .result.show{display:grid;}
+    .result strong{font-size:13px}
+    .result .small{font-size:12px; color:var(--muted)}
+
+    .two-col{display:grid; grid-template-columns: 1fr 1fr; gap:10px;}
+    @media (max-width: 520px){ .two-col{grid-template-columns:1fr} }
+
+    .footer{margin-top:8px; color:var(--muted); font-size:12px; line-height:1.45;}
+
+    .modal{position:fixed; inset:0; display:none; align-items:center; justify-content:center; background: rgba(17,24,39,.45); padding: 18px;}
+    .modal.show{display:flex}
+    .modal .box{width:min(820px, 100%); background: rgba(255,255,255,.95); border: 1px solid var(--border); border-radius: 18px; box-shadow: var(--shadow); padding: 16px;}
+    .modal h2{margin:0 0 8px 0; font-size:16px}
+    .modal p{margin:0 0 12px 0; color:var(--muted); font-size:13px; line-height:1.45}
+
+    table{width:100%; border-collapse:collapse; font-size:13px}
+    th,td{padding:10px; border-bottom:1px solid rgba(17,24,39,.08); vertical-align:top}
+    th{color:var(--muted); text-align:left; font-size:12px; font-weight:900}
+    .money{font-variant-numeric: tabular-nums; white-space:nowrap}
+
+    .kpi{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:10px;
+      margin: 10px 0 2px;
+    }
+    @media (max-width: 620px){ .kpi{grid-template-columns:1fr} }
+    .kpi .box{
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.95);
+      border-radius: 16px;
+      padding: 12px;
+      box-shadow: 0 10px 24px rgba(17,24,39,.05);
+    }
+    .kpi .n{font-size:18px; font-weight:900}
+    .kpi .l{font-size:12px; color:var(--muted)}
+
+    .badgeGood{color: #047857; font-weight:900}
+    .badgeBad{color: #b91c1c; font-weight:900}
+
+    .tiny{font-size:11px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7 4.8c1.4-1 3-1.5 5-1.5s3.6.5 5 1.5l2.4 1.7c.6.4.7 1.2.3 1.8l-1.2 1.8c-.4.6-.3 1.4.3-1.8l-.7-.5V19c0 1.1-.9 2-2 2H10c-1.1 0-2-.9-2-2V9.4l-.7.5c-.6.4-1.4.3-1.8-.3L4.3 7.8c-.4-.6-.3-1.4.3-1.8L7 4.8Z" fill="white" opacity="0.95"/>
+            <path d="M9.5 19.5c.3-1.1 1.4-1.9 2.5-1.9s2.2.8 2.5 1.9" stroke="rgba(255,255,255,.85)" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1>Baby Shower: The Price Is Right</h1>
+          <div class="sub">Virtual game • mobile + desktop</div>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="pill">Mode: <strong id="modeText">Player</strong></div>
+        <button class="btn" id="btnHow">How it works</button>
+        <button class="btn" id="btnReset">Reset</button>
+      </div>
+    </header>
+
+    <div class="card">
+      <div class="grid" id="mainGrid">
+        <div class="pane hero">
+          <div class="imgbox"><img id="itemImg" alt="Item image" /></div>
+          <div>
+            <p class="item-title" id="itemTitle">Loading…</p>
+            <div class="meta">
+              <span class="tag" id="itemVendor">Vendor</span>
+              <span class="tag" id="itemCategory">Category</span>
+              <span class="tag" id="itemPriceTier">Tier</span>
+              <a class="tag" id="itemLink" href="#" target="_blank" rel="noopener noreferrer">Open product</a>
+            </div>
+            <p class="desc" id="itemDesc"></p>
+          </div>
+        </div>
+
+        <div class="pane controls">
+          <div class="two-col">
+            <div>
+              <label for="mode">Mode</label>
+              <select id="mode">
+                <option value="player">Player</option>
+                <option value="host">Host (PIN required)</option>
+              </select>
+            </div>
+            <div id="pinWrap" style="display:none;">
+              <label for="pin">Host PIN</label>
+              <input id="pin" type="password" placeholder="Enter PIN" />
+            </div>
+          </div>
+
+          <div id="playerSetup" class="two-col">
+            <div>
+              <label for="playerName">Player name</label>
+              <input id="playerName" type="text" placeholder="e.g., Auntie Kim" />
+            </div>
+            <div>
+              <label for="roundSelect">Round</label>
+              <select id="roundSelect"></select>
+            </div>
+            <div style="grid-column: 1 / -1;">
+              <button class="btn primary" id="btnStart" style="width:100%;">Start round</button>
+            </div>
+          </div>
+
+          <div class="hint" id="hostHint" style="display:none;">
+            <strong>Host mode unlocked.</strong> You can reveal answers and open the answer sheet.
+          </div>
+
+          <div class="progress" aria-label="Progress"><div class="bar" id="bar"></div></div>
+          <div class="statline">
+            <div><strong>Round</strong> <span id="roundText">1</span> • <span id="posText">Item 1</span> of <span id="totalText">0</span></div>
+            <div>Locked: <span id="lockedCount">0</span></div>
+          </div>
+
+          <div>
+            <label for="guess">Your guess (USD)</label>
+            <input id="guess" type="number" inputmode="decimal" placeholder="e.g., 29.99" step="0.01" min="0" />
+            <div class="row" style="margin-top:10px;">
+              <button class="btn good" id="btnLock">Confirm & Lock</button>
+              <button class="btn" id="btnNext">Next item →</button>
+              <button class="btn" id="btnPrev">← Back</button>
+            </div>
+          </div>
+
+          <div class="result" id="resultBox">
+            <div>
+              <strong id="resultTitle">Locked!</strong>
+              <div class="small" id="resultSub">Your guess was saved.</div>
+            </div>
+          </div>
+
+          <div class="row" style="justify-content:space-between;">
+            <button class="btn" id="btnAnswers" style="display:none;">Answer sheet</button>
+            <button class="btn" id="btnReveal" style="display:none;">Reveal price</button>
+          </div>
+
+          <div class="footer" id="footerText"></div>
+        </div>
+      </div>
+
+      <div class="pane" id="resultsPane" style="display:none;">
+        <div class="kpi">
+          <div class="box"><div class="n" id="kpiScore">0</div><div class="l">Points awarded</div></div>
+          <div class="box"><div class="n" id="kpiAccuracy">0</div><div class="l">Awarded / Items</div></div>
+        </div>
+        <p class="tiny" id="resultsHint">Tap Done to start the next round.</p>
+        <div style="max-height:60vh; overflow:auto; border-radius:14px; border:1px solid var(--border); background: rgba(255,255,255,.9);">
+          <table id="resultsTable"></table>
+        </div>
+        <div class="row" style="justify-content:flex-end; margin-top:12px;">
+          <button class="btn primary" id="btnDone">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="modalHow" role="dialog" aria-modal="true" aria-labelledby="howTitle">
+      <div class="box">
+        <h2 id="howTitle">How to play</h2>
+        <p>
+          Enter your name, then guess the price for each item. Tap <strong>Confirm & Lock</strong> to lock in your answer.
+        </p>
+        <p>
+          When you finish all items in the round, you will see the <strong>Results</strong> screen.
+        </p>
+        <p>
+          <strong>Scoring rule (virtual play):</strong> After everyone finishes, the host asks each player to say their guess.
+          The host awards <strong>1 point</strong> to the person whose guess is <strong>closest</strong> to the actual price for that item.
+          On your Results screen, toggle <strong>Point</strong> ON for the items where the host awarded you the point.
+        </p>
+        <div class="row" style="justify-content:flex-end;">
+          <button class="btn primary" id="btnCloseHow">Close</button>
+        </div>
+        <div class="tiny">Tip: On Zoom, keep the game on your phone and Zoom on your laptop.</div>
+      </div>
+    </div>
+
+    <div class="modal" id="modalAnswers" role="dialog" aria-modal="true" aria-labelledby="answersTitle">
+      <div class="box">
+        <h2 id="answersTitle">Answer sheet</h2>
+        <p>Use this to read prices out loud or verify winners. (Host mode only.)</p>
+        <div style="max-height:55vh; overflow:auto; border-radius:14px; border:1px solid var(--border); background: rgba(255,255,255,.9);">
+          <table id="answersTable"></table>
+        </div>
+        <div class="row" style="justify-content:flex-end; margin-top:12px;">
+          <button class="btn" id="btnCloseAnswers">Close</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // Fixes for your runtime SyntaxError:
+  // 1) Removed a stray backslash in render() that caused "Invalid or unexpected token".
+  // 2) Rebuilt svgImg() to use base64 data URLs + sanitization so labels can never break SVG parsing.
+
+  function sanitizeLabel(label){
+    // Keep it simple and safe for SVG text.
+    // - Remove newlines/control chars
+    // - Keep mostly printable characters
+    // - Trim + clamp length
+    return String(label)
+      .replace(/[\u0000-\u001F\u007F]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim()
+      .slice(0, 22);
+  }
+
+  function svgImg(label){
+    const safe = sanitizeLabel(label);
+    const svg = `
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffe3f0"/>
+      <stop offset="1" stop-color="#dff4ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="100%" height="100%" rx="32" fill="url(#g)"/>
+  <g opacity="0.9">
+    <path d="M240 190c20-70 80-110 160-110s140 40 160 110" fill="none" stroke="#ff7ab6" stroke-width="18" stroke-linecap="round"/>
+    <path d="M260 210h280v200c0 60-60 110-140 110s-140-50-140-110z" fill="#ffffff" stroke="#ffd0e4" stroke-width="10"/>
+    <circle cx="340" cy="420" r="16" fill="#ff7ab6"/>
+    <circle cx="460" cy="420" r="16" fill="#ff7ab6"/>
+  </g>
+  <text x="50%" y="520" text-anchor="middle" font-family="ui-sans-serif, system-ui" font-size="44" fill="#3b2b4a">${safe}</text>
+</svg>`;
+
+    // Base64 avoids edge-case token/encoding issues when embedding SVG as a data URL.
+    const b64 = btoa(unescape(encodeURIComponent(svg)));
+    return `data:image/svg+xml;base64,${b64}`;
+  }
+
+  const ITEMS = [
+    // Round 1 (15)
+    { id:"wipes",        name:"Baby Wipes",        vendor:"Walmart", category:"Essentials", tier:"Up to $30", price:15.97, img:svgImg('Baby Wipes'),   desc:"Pack of sensitive wipes." },
+    { id:"rashcream",    name:"Rash Cream",        vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:7.97,  img:svgImg('Rash Cream'),   desc:"Soothing skin cream." },
+    { id:"ointment",     name:"Baby Ointment",     vendor:"Walmart", category:"Essentials", tier:"Up to $30", price:12.97, img:svgImg('Ointment'),     desc:"Healing ointment tube." },
+    { id:"wash",         name:"Baby Wash",         vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:7.68,  img:svgImg('Baby Wash'),    desc:"Gentle wash (large)." },
+    { id:"pacifiers",    name:"Pacifiers (2)",     vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:4.47,  img:svgImg('Pacifiers'),    desc:"Newborn pacifiers." },
+    { id:"bottles",      name:"Bottle Set",        vendor:"Walmart", category:"Essentials", tier:"Up to $30", price:18.88, img:svgImg('Bottles'),      desc:"Set of feeding bottles." },
+    { id:"bibs",         name:"Bibs Pack",         vendor:"Walmart", category:"Clothing",   tier:"Up to $15", price:9.98,  img:svgImg('Bibs'),         desc:"Easy-clean bibs." },
+    { id:"burpcloths",   name:"Burp Cloths",       vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:11.97, img:svgImg('Burp Cloths'),  desc:"Soft cloth set." },
+    { id:"diapers",      name:"Diapers Pack",      vendor:"Walmart", category:"Essentials", tier:"Up to $30", price:24.97, img:svgImg('Diapers'),      desc:"Disposable diapers." },
+    { id:"diaperbag",    name:"Diaper Bag",        vendor:"Walmart", category:"Essentials", tier:"$60+",      price:69.99, img:svgImg('Diaper Bag'),   desc:"Backpack-style bag." },
+    { id:"thermometer",  name:"Thermometer",       vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:9.97,  img:svgImg('Thermometer'),  desc:"Digital thermometer." },
+    { id:"nailkit",      name:"Grooming Kit",      vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:8.98,  img:svgImg('Grooming'),     desc:"Nail + care set." },
+    { id:"rattle",       name:"Rattle Toy",        vendor:"Walmart", category:"Toys",       tier:"Up to $15", price:6.97,  img:svgImg('Rattle'),       desc:"Easy-grip rattle." },
+    { id:"shapesorter",  name:"Shape Sorter",      vendor:"Walmart", category:"Toys",       tier:"Up to $15", price:9.97,  img:svgImg('Shape Sorter'), desc:"Classic sorter toy." },
+    { id:"bathletters",  name:"Bath Letters",      vendor:"Walmart", category:"Toys",       tier:"Up to $15", price:5.97,  img:svgImg('Bath Letters'), desc:"Foam bath letters." },
+
+    // Round 2 (15)
+    { id:"onesies",      name:"Onesies (3)",       vendor:"Walmart", category:"Clothing",   tier:"Up to $15", price:12.98, img:svgImg('Onesies'),      desc:"Soft onesie set." },
+    { id:"socks",        name:"Socks Pack",        vendor:"Walmart", category:"Clothing",   tier:"Up to $15", price:7.98,  img:svgImg('Socks'),        desc:"Tiny sock pack." },
+    { id:"mittens",      name:"Mittens",           vendor:"Walmart", category:"Clothing",   tier:"Up to $15", price:6.48,  img:svgImg('Mittens'),      desc:"Scratch mittens." },
+    { id:"blanket",      name:"Swaddle Blanket",   vendor:"Walmart", category:"Essentials", tier:"Up to $30", price:19.99, img:svgImg('Swaddle'),      desc:"Soft swaddle blanket." },
+    { id:"bouncer",      name:"Bouncer Seat",      vendor:"Walmart", category:"Essentials", tier:"$60+",      price:49.99, img:svgImg('Bouncer'),      desc:"Soothing bouncer." },
+    { id:"highchair",    name:"High Chair",        vendor:"Walmart", category:"Essentials", tier:"$60+",      price:79.00, img:svgImg('High Chair'),   desc:"Feeding chair." },
+    { id:"babyfood",     name:"Baby Food Pack",    vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:9.44,  img:svgImg('Baby Food'),    desc:"Puree multipack." },
+    { id:"formula",      name:"Formula (Powder)",  vendor:"Walmart", category:"Essentials", tier:"Up to $60", price:36.97, img:svgImg('Formula'),      desc:"Powder formula tub." },
+    { id:"bottlebrush",  name:"Bottle Brush",      vendor:"Walmart", category:"Essentials", tier:"Up to $15", price:6.96,  img:svgImg('Brush'),        desc:"Cleaning brush." },
+    { id:"teether",      name:"Teether",           vendor:"Walmart", category:"Toys",       tier:"Up to $15", price:7.49,  img:svgImg('Teether'),      desc:"Soothing teether." },
+    { id:"activitygym",  name:"Play Mat",          vendor:"Walmart", category:"Toys",       tier:"$60+",      price:54.99, img:svgImg('Play Mat'),    desc:"Tummy time mat." },
+    { id:"monitor",      name:"Baby Monitor",      vendor:"Walmart", category:"Essentials", tier:"$60+",      price:99.00, img:svgImg('Monitor'),      desc:"Video/audio monitor." },
+    { id:"stroller",     name:"Stroller",          vendor:"Walmart", category:"Essentials", tier:"$60+",      price:169.99, img:svgImg('Stroller'),     desc:"Everyday stroller." },
+    { id:"carseat",      name:"Car Seat",          vendor:"Walmart", category:"Essentials", tier:"$60+",      price:129.99, img:svgImg('Car Seat'),     desc:"Rear-facing seat." },
+    { id:"crib",         name:"Crib",              vendor:"Walmart", category:"Essentials", tier:"$60+",      price:199.00, img:svgImg('Crib'),         desc:"Standard baby crib." },
+  ];
+
+  const ROUND_SIZE = 15;
+  const ROUND_COUNT = Math.ceil(ITEMS.length / ROUND_SIZE);
+  const ROUNDS = Array.from({length: ROUND_COUNT}, (_, r)=> ITEMS.slice(r*ROUND_SIZE, r*ROUND_SIZE + ROUND_SIZE));
+
+  const money = (n)=> new Intl.NumberFormat('en-US', { style:'currency', currency:'USD' }).format(n);
+  const clamp = (n, min, max)=> Math.max(min, Math.min(max, n));
+
+  function productLinkFor(item){
+    const q = encodeURIComponent(item.name);
+    const v = (item.vendor || '').toLowerCase();
+    if(v.includes('walmart')) return `https://www.walmart.com/search?q=${q}`;
+    return `https://www.google.com/search?q=${q}`;
+  }
+
+  function escapeHtml(str){
+    return String(str)
+      .replaceAll('&','&amp;')
+      .replaceAll('<','&lt;')
+      .replaceAll('>','&gt;')
+      .replaceAll('"','&quot;')
+      .replaceAll("'",'&#39;');
+  }
+
+  const els = {
+    modeText: document.getElementById('modeText'),
+    mode: document.getElementById('mode'),
+    pinWrap: document.getElementById('pinWrap'),
+    pin: document.getElementById('pin'),
+
+    playerSetup: document.getElementById('playerSetup'),
+    playerName: document.getElementById('playerName'),
+    roundSelect: document.getElementById('roundSelect'),
+    btnStart: document.getElementById('btnStart'),
+
+    img: document.getElementById('itemImg'),
+    title: document.getElementById('itemTitle'),
+    vendor: document.getElementById('itemVendor'),
+    category: document.getElementById('itemCategory'),
+    tier: document.getElementById('itemPriceTier'),
+    desc: document.getElementById('itemDesc'),
+    itemLink: document.getElementById('itemLink'),
+
+    guess: document.getElementById('guess'),
+    btnLock: document.getElementById('btnLock'),
+    btnNext: document.getElementById('btnNext'),
+    btnPrev: document.getElementById('btnPrev'),
+
+    bar: document.getElementById('bar'),
+    posText: document.getElementById('posText'),
+    totalText: document.getElementById('totalText'),
+    lockedCount: document.getElementById('lockedCount'),
+    roundText: document.getElementById('roundText'),
+
+    resultBox: document.getElementById('resultBox'),
+    resultTitle: document.getElementById('resultTitle'),
+    resultSub: document.getElementById('resultSub'),
+
+    hostHint: document.getElementById('hostHint'),
+    btnReveal: document.getElementById('btnReveal'),
+    btnAnswers: document.getElementById('btnAnswers'),
+
+    btnHow: document.getElementById('btnHow'),
+    btnReset: document.getElementById('btnReset'),
+    footerText: document.getElementById('footerText'),
+
+    modalHow: document.getElementById('modalHow'),
+    btnCloseHow: document.getElementById('btnCloseHow'),
+
+    modalAnswers: document.getElementById('modalAnswers'),
+    answersTable: document.getElementById('answersTable'),
+    btnCloseAnswers: document.getElementById('btnCloseAnswers'),
+
+    mainGrid: document.getElementById('mainGrid'),
+    resultsPane: document.getElementById('resultsPane'),
+    resultsTable: document.getElementById('resultsTable'),
+    btnDone: document.getElementById('btnDone'),
+    kpiScore: document.getElementById('kpiScore'),
+    kpiAccuracy: document.getElementById('kpiAccuracy'),
+  };
+
+  // State
+  const STORAGE_KEY = 'bs_price_is_right_clean_v2';
+  const defaultState = ()=>({
+    mode:'player',
+    hostUnlocked:false,
+    playerName:'',
+    round:0,
+    started:false,
+    idx:0,
+    roundData:{} // { [roundIndex]: { guesses, locked, awarded, completed } }
+  });
+
+  let state = loadState();
+
+  function loadState(){
+    try{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw) return defaultState();
+      return { ...defaultState(), ...JSON.parse(raw) };
+    }catch{ return defaultState(); }
+  }
+  function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+
+  function ensureRoundData(r){
+    const k = String(r);
+    if(!state.roundData[k]) state.roundData[k] = { guesses:{}, locked:{}, awarded:{}, completed:false };
+    return state.roundData[k];
+  }
+  function rd(){ return ensureRoundData(state.round); }
+
+  function currentItems(){ return ROUNDS[state.round] || []; }
+
+  function lockedCount(){
+    const items = currentItems();
+    const d = rd();
+    return items.reduce((acc,it)=> acc + (d.locked[it.id] ? 1 : 0), 0);
+  }
+
+  function toast(title, msg){
+    els.resultBox.classList.add('show');
+    els.resultTitle.textContent = title;
+    els.resultSub.textContent = msg;
+    setTimeout(()=> els.resultBox.classList.remove('show'), 1400);
+  }
+
+  const HOST_PIN = '1979';
+  function tryUnlock(pin){
+    state.hostUnlocked = (pin === HOST_PIN);
+    saveState();
+    render();
+  }
+
+  function setMode(mode){
+    state.mode = mode;
+    if(mode !== 'host'){
+      state.hostUnlocked = false;
+      if(els.pin) els.pin.value = '';
+    }
+    saveState();
+    render();
+  }
+
+  function renderRoundOptions(){
+    els.roundSelect.innerHTML = '';
+    for(let r=0; r<ROUND_COUNT; r++){
+      const opt = document.createElement('option');
+      opt.value = String(r);
+      opt.textContent = `Round ${r+1} (${ROUNDS[r].length} items)`;
+      els.roundSelect.appendChild(opt);
+    }
+    els.roundSelect.value = String(clamp(state.round, 0, ROUND_COUNT-1));
+  }
+
+  function startRound(){
+    const name = (els.playerName.value || '').trim();
+    if(!name){
+      toast('Name needed', 'Please enter your name to start.');
+      return;
+    }
+    state.playerName = name;
+    state.round = clamp(Number(els.roundSelect.value || 0), 0, ROUND_COUNT-1);
+    state.started = true;
+    state.idx = 0;
+    state.roundData[String(state.round)] = { guesses:{}, locked:{}, awarded:{}, completed:false };
+    saveState();
+    hideResults();
+    render();
+  }
+
+  function setIndex(i){
+    const items = currentItems();
+    state.idx = clamp(i, 0, Math.max(0, items.length - 1));
+    saveState();
+    render();
+  }
+
+  function lockGuess(){
+    if(state.mode === 'player' && !state.started){
+      toast('Start first', 'Enter your name and tap Start round.');
+      return;
+    }
+
+    const items = currentItems();
+    const item = items[state.idx];
+    if(!item) return;
+
+    const d = rd();
+    if(d.completed && state.mode === 'player') return;
+
+    const v = Number(els.guess.value);
+    if(!Number.isFinite(v) || v < 0){
+      toast('Invalid price', 'Enter a valid number (e.g., 29.99).');
+      return;
+    }
+
+    d.guesses[item.id] = Number(v.toFixed(2));
+    d.locked[item.id] = true;
+    d.completed = (lockedCount() === items.length);
+    saveState();
+
+    toast('Locked ✅', `Saved ${money(v)} for this item.`);
+
+    if(state.mode === 'player' && d.completed){
+      showResults();
+      return;
+    }
+
+    if(state.idx < items.length - 1) setIndex(state.idx + 1);
+  }
+
+  function revealPrice(){
+    const item = currentItems()[state.idx];
+    if(!item) return;
+    toast('Answer', `${item.name} → ${money(item.price)}`);
+  }
+
+  function openAnswers(){
+    const rows = [];
+    rows.push('<tr><th>#</th><th>Item</th><th class="money">Price</th></tr>');
+    currentItems().forEach((it,i)=>{
+      rows.push(`<tr><td>${i+1}</td><td>${escapeHtml(it.name)}</td><td class="money">${money(it.price)}</td></tr>`);
+    });
+    els.answersTable.innerHTML = rows.join('');
+    els.modalAnswers.classList.add('show');
+  }
+
+  function computeResults(){
+    const items = currentItems();
+    const d = rd();
+    let totalAwarded = 0;
+    const rows = items.map((it,i)=>{
+      const g = d.guesses[it.id];
+      const has = typeof g === 'number';
+      const awarded = !!d.awarded[it.id];
+      if(awarded) totalAwarded += 1;
+      const label = has ? (Number(g) === Number(it.price) ? 'Correct' : 'Wrong') : 'Missing';
+      const cls = (label === 'Correct') ? 'badgeGood' : 'badgeBad';
+      return { n:i+1, id:it.id, name:it.name, guess: has ? money(g) : '—', actual: money(it.price), label, cls, awarded };
+    });
+    return { rows, totalAwarded, totalItems: Math.max(1, items.length) };
+  }
+
+  function showResults(){
+    if(state.mode !== 'player') return;
+
+    const d = rd();
+    d.completed = true;
+    saveState();
+
+    const r = computeResults();
+    els.kpiScore.textContent = String(r.totalAwarded);
+    els.kpiAccuracy.textContent = `${r.totalAwarded}/${r.totalItems}`;
+
+    const header = '<tr><th>#</th><th>Item</th><th class="money">Your guess</th><th class="money">Actual</th><th>Right/Wrong</th><th class="money">Point</th></tr>';
+    const body = r.rows.map(x=>
+      `<tr>
+        <td>${x.n}</td>
+        <td>${escapeHtml(x.name)}</td>
+        <td class="money">${x.guess}</td>
+        <td class="money">${x.actual}</td>
+        <td class="${x.cls}">${x.label}</td>
+        <td class="money">
+          <label style="display:inline-flex; gap:8px; align-items:center; justify-content:flex-end;">
+            <input type="checkbox" class="award" data-id="${x.id}" ${x.awarded ? 'checked' : ''} />
+            <strong>${x.awarded ? 1 : 0}</strong>
+          </label>
+        </td>
+      </tr>`
+    ).join('');
+
+    els.resultsTable.innerHTML = header + body;
+
+    els.resultsTable.querySelectorAll('input.award').forEach(cb=>{
+      cb.addEventListener('change', (e)=>{
+        const id = e.target.getAttribute('data-id');
+        const d2 = rd();
+        d2.awarded[id] = !!e.target.checked;
+        saveState();
+
+        const r2 = computeResults();
+        els.kpiScore.textContent = String(r2.totalAwarded);
+        els.kpiAccuracy.textContent = `${r2.totalAwarded}/${r2.totalItems}`;
+        const strong = e.target.parentElement.querySelector('strong');
+        if(strong) strong.textContent = e.target.checked ? '1' : '0';
+      });
+    });
+
+    els.mainGrid.style.display = 'none';
+    els.resultsPane.style.display = 'block';
+    els.footerText.textContent = '';
+  }
+
+  function hideResults(){
+    els.resultsPane.style.display = 'none';
+    els.mainGrid.style.display = 'grid';
+  }
+
+  function advanceRoundOrRestart(){
+    hideResults();
+
+    if(state.round < ROUND_COUNT - 1){
+      state.round += 1;
+      state.idx = 0;
+      state.started = true;
+      state.roundData[String(state.round)] = { guesses:{}, locked:{}, awarded:{}, completed:false };
+      saveState();
+      toast('Next round 🎯', `Starting Round ${state.round + 1}.`);
+      render();
+      return;
+    }
+
+    toast('All rounds complete 🎉', 'Start again to play another game.');
+    state.started = false;
+    state.round = 0;
+    state.idx = 0;
+    saveState();
+    render();
+  }
+
+  function resetAll(){
+    state = defaultState();
+    saveState();
+    hideResults();
+    render();
+  }
+
+  function render(){
+    renderRoundOptions();
+
+    // Mode UI
+    els.mode.value = state.mode;
+    const isHost = state.mode === 'host';
+    els.pinWrap.style.display = isHost ? 'block' : 'none';
+
+    if(isHost){
+      els.modeText.textContent = state.hostUnlocked ? 'Host (Unlocked)' : 'Host';
+      els.hostHint.style.display = state.hostUnlocked ? 'block' : 'none';
+      els.btnReveal.style.display = state.hostUnlocked ? 'inline-block' : 'none';
+      els.btnAnswers.style.display = state.hostUnlocked ? 'inline-block' : 'none';
+    } else {
+      els.modeText.textContent = 'Player';
+      els.hostHint.style.display = 'none';
+      els.btnReveal.style.display = 'none';
+      els.btnAnswers.style.display = 'none';
+    }
+
+    // Player setup
+    els.playerSetup.style.display = (state.mode === 'player' && !state.started) ? 'grid' : 'none';
+    if(state.playerName && !els.playerName.value) els.playerName.value = state.playerName;
+
+    const d = rd();
+    const items = currentItems();
+
+    els.roundText.textContent = String(state.round + 1);
+    els.totalText.textContent = String(items.length);
+
+    // If complete, show results
+    if(state.mode === 'player' && state.started){
+      if(lockedCount() === items.length && items.length > 0){
+        d.completed = true;
+        saveState();
+        showResults();
+        return;
+      }
+      if(d.completed){
+        showResults();
+        return;
+      }
+    }
+
+    const item = items[state.idx];
+    if(!item){
+      els.title.textContent = 'No items in this round.';
+      els.desc.textContent = 'Add items to enable rounds.';
+      els.guess.disabled = true;
+      els.btnLock.disabled = true;
+      return;
+    }
+
+    // Current item
+    els.title.textContent = item.name;
+    els.vendor.textContent = `Source: ${item.vendor}`;
+    els.category.textContent = item.category;
+    els.tier.textContent = item.tier;
+    els.desc.textContent = item.desc;
+    els.itemLink.href = productLinkFor(item);
+
+    els.img.src = item.img;
+    els.img.alt = item.name;
+
+    const existing = d.guesses[item.id];
+    const locked = !!d.locked[item.id];
+
+    els.guess.value = (typeof existing === 'number') ? existing : '';
+    els.guess.disabled = locked;
+    els.btnLock.disabled = locked;
+
+    els.posText.textContent = `Item ${state.idx + 1}`;
+    els.lockedCount.textContent = String(lockedCount());
+
+    const pct = ((state.idx) / Math.max(1, items.length - 1)) * 100;
+    els.bar.style.width = `${pct}%`;
+
+    els.btnPrev.disabled = (state.idx === 0);
+    els.btnNext.disabled = (state.idx === items.length - 1);
+
+    if(state.mode === 'player'){
+      if(state.started){
+        const remaining = items.length - lockedCount();
+        els.footerText.textContent = `Lock your guess on each item. Remaining: ${remaining}.`;
+      } else {
+        els.footerText.textContent = 'Enter your name, pick a round, then tap “Start round.”';
+      }
+    } else {
+      els.footerText.textContent = state.hostUnlocked ? 'Host tools unlocked.' : 'Enter the PIN to unlock host tools.';
+    }
+  }
+
+  // --- Tests (console) ---
+  function assert(cond, msg){ if(!cond) throw new Error('Test failed: ' + msg); }
+  function runTests(){
+    assert(ROUND_COUNT >= 1, 'At least 1 round');
+    assert(ROUNDS[0].length === 15, 'Round 1 has 15 items');
+    if(ROUND_COUNT >= 2) assert(ROUNDS[1].length === 15, 'Round 2 has 15 items');
+    if(ROUND_COUNT >= 2) assert(ROUNDS[0][0].id !== ROUNDS[1][0].id, 'Round item sets differ');
+
+    // New tests
+    const u = svgImg("Baby Wipes");
+    assert(typeof u === 'string' && u.startsWith('data:image/svg+xml;base64,'), 'svgImg returns base64 SVG data URL');
+    const bad = svgImg("Bad\nLabel\u0000\u0007");
+    assert(bad.includes('data:image/svg+xml;base64,'), 'svgImg sanitizes control characters');
+    assert(typeof productLinkFor(ITEMS[0]) === 'string' && productLinkFor(ITEMS[0]).includes('walmart.com'), 'productLinkFor returns Walmart search URL');
+  }
+
+  // --- Events ---
+  els.mode.addEventListener('change', (e)=> setMode(e.target.value));
+  els.pin.addEventListener('input', (e)=> tryUnlock(e.target.value.trim()));
+  els.btnStart.addEventListener('click', startRound);
+
+  els.btnLock.addEventListener('click', lockGuess);
+  els.btnNext.addEventListener('click', ()=> setIndex(state.idx + 1));
+  els.btnPrev.addEventListener('click', ()=> setIndex(state.idx - 1));
+
+  els.btnReveal.addEventListener('click', revealPrice);
+  els.btnAnswers.addEventListener('click', openAnswers);
+
+  els.btnReset.addEventListener('click', ()=>{ if(confirm('Reset everything on this device?')) resetAll(); });
+
+  els.btnHow.addEventListener('click', ()=> els.modalHow.classList.add('show'));
+  els.btnCloseHow.addEventListener('click', ()=> els.modalHow.classList.remove('show'));
+  els.modalHow.addEventListener('click', (e)=>{ if(e.target === els.modalHow) els.modalHow.classList.remove('show'); });
+
+  els.btnCloseAnswers.addEventListener('click', ()=> els.modalAnswers.classList.remove('show'));
+  els.modalAnswers.addEventListener('click', (e)=>{ if(e.target === els.modalAnswers) els.modalAnswers.classList.remove('show'); });
+
+  els.btnDone.addEventListener('click', advanceRoundOrRestart);
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape'){
+      els.modalHow.classList.remove('show');
+      els.modalAnswers.classList.remove('show');
+    }
+    if(e.key === 'Enter'){
+      if(document.activeElement === els.guess && !els.btnLock.disabled) lockGuess();
+    }
+  });
+
+  // Boot
+  try{ runTests(); }catch(err){ console.error(err); }
+  render();
+</script>
+</body>
+</html>
